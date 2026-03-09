@@ -55,7 +55,8 @@ export async function initializeBoardClaimChallenge(
     .where(eq(instanceUserRoles.role, "instance_admin"));
 
   const onlyLocalBoardAdmin = admins.length === 1 && admins[0]?.userId === LOCAL_BOARD_USER_ID;
-  if (!onlyLocalBoardAdmin) {
+  const noAdmins = admins.length === 0;
+  if (!onlyLocalBoardAdmin && !noAdmins) {
     activeChallenge = null;
     return;
   }
