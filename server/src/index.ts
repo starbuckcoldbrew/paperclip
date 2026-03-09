@@ -52,6 +52,7 @@ type EmbeddedPostgresCtor = new (opts: {
   password: string;
   port: number;
   persistent: boolean;
+  createPostgresUser?: boolean;
   onLog?: (message: unknown) => void;
   onError?: (message: unknown) => void;
 }) => EmbeddedPostgresInstance;
@@ -323,6 +324,7 @@ if (config.databaseUrl) {
       password: "paperclip",
       port,
       persistent: true,
+      createPostgresUser: true,
       onLog: appendEmbeddedPostgresLog,
       onError: appendEmbeddedPostgresLog,
     });
@@ -375,7 +377,7 @@ if (config.databaseUrl) {
 if (config.deploymentMode === "local_trusted" && !isLoopbackHost(config.host)) {
   throw new Error(
     `local_trusted mode requires loopback host binding (received: ${config.host}). ` +
-      "Use authenticated mode for non-loopback deployments.",
+    "Use authenticated mode for non-loopback deployments.",
   );
 }
 
